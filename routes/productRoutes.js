@@ -1,7 +1,9 @@
 
-const ProductCtrl =require('../controllers/product')
-const productRoutes= (app) => {
+const ProductCtrl = require('../controllers/product')
+const { expressjwt: JWT } = require("express-jwt");
 
+
+const productRoutes= (app) => {
     app.get('/products',async (req, res) => {
       let response = await ProductCtrl.getAllProducts()
       console.log(response);
@@ -14,9 +16,6 @@ const productRoutes= (app) => {
       return res.json({...response})
     })
      
-    
-    
-  
 };
-  module.exports=productRoutes
+module.exports = productRoutes;
 
