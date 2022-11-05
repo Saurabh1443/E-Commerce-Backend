@@ -56,7 +56,7 @@ const orderSchema = mongoose.Schema({
     },
     paymentResult: {
         id: { type: String },
-        status: { typeString },
+        status: { type:String },
         update_time: { type: String },
         email_address:{type:String}
     },
@@ -94,4 +94,4 @@ const orderSchema = mongoose.Schema({
 }, { timeStamps: true })
 
 const order = mongoose.model('order', orderSchema);
-export default order;
+module.exports= order;

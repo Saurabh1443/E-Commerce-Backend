@@ -1,21 +1,25 @@
 const express = require("express");
+const cors=require('cors')
 const products=require('./data/product')
 const dotenv = require('dotenv')
 const connectDb = require('./config/config')
 const colors = require('colors');
+const productRoutes = require('./routes/productRoutes')
+
+
 dotenv.config()
 connectDb();
+
 const app = express();
 
-
+app.use(cors())
+app.use(express.json())
 
 app.get('/', (req, res) => {
     res.send('<h1>Welcome to node server</h1>')
     console.log('server started')
 })
-app.get('/products', (req, res) => {
-    res.json(products)
-})
+productRoutes(app);
 
 const PORT=8080
 app.listen(process.env.PORT || PORT, () => {
