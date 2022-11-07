@@ -5,7 +5,8 @@ const dotenv = require('dotenv')
 const connectDb = require('./config/config')
 const colors = require('colors');
 const productRoutes = require('./routes/productRoutes')
-const userRoutes = require('./routes/userRoutes')
+const userRoutes = require('./routes/userRoutes');
+const orderRoutes = require("./routes/orderRoutes");
 
 dotenv.config()
 connectDb();
@@ -21,6 +22,8 @@ app.get('/', (req, res) => {
 })
 productRoutes(app);
 userRoutes(app)
+orderRoutes(app)
+
 const PORT=8080
 app.listen(process.env.PORT || PORT, () => {
     console.log(`Server running in ${process.env.NODE_ENV} Mode on port ${process.env.PORT}`.inverse);

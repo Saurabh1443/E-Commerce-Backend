@@ -35,10 +35,10 @@ const x = {
             return resolve({
               ...successObj,
               token: JWTToken,
-              user: {
+              userInfo: {
                 _id: user._id,
                 email: user.email,
-                userType: user.userType,
+                isAdmin: user.isAdmin,
                 name: user.name,
               },
             });
@@ -54,7 +54,6 @@ const x = {
           const {
             email,
             password,
-            isAdmin,
             name,
           } = data;
            
@@ -80,7 +79,8 @@ const x = {
           user.email = email;
           user.password = user.generateHash(password);
           user.name = name;
-          user.isAdmin=isAdmin
+          
+          
 
               user.save((err, doc) => {
                   if (err) {
@@ -90,16 +90,36 @@ const x = {
                     message: "Email already exist.",
                   });
                 }
-    
+               console.log(doc,'ffffffffffffffffffffffff')
                 resolve({
                   ...successObj,
                   message:  `user added successfully`,
-                  data: doc,
+                  userInfo: {
+                    _id: doc._id,
+                    email: doc.email,
+                    name: doc.name,
+                  },
                 });
             
             } )
           });
         
-      },
+  },
+  profileById: (_id) => new Promise((resolve) => {
+    User.findOne({ _id }).lean().exec((err, doc) => {
+      if (err || !doc) {
+        resolve({
+          ...errorObj,
+          message:'User not found'
+          })
+      }
+      else {
+        resolve({
+          ...successObj,
+          data:doc
+        })
+      }
+      })
+    })
 }
 module.exports=x

@@ -8,11 +8,12 @@ const orderSchema = mongoose.Schema({
     },
     orderItems: [
         {
+            
             name: {
                 type: String,
                 required:true
             },
-            Qty: {
+            qty: {
                 type: Number,
                 required:true
             },
@@ -25,9 +26,8 @@ const orderSchema = mongoose.Schema({
                 required:true
             },
             product: {
-                type: mongoose.Schema.Types.ObjectId,
-                required: true,
-                ref:'product'
+                type: String,
+                required: true,  
             },
         }
     ],
@@ -50,16 +50,16 @@ const orderSchema = mongoose.Schema({
             required:true
         }
     },
-    payment: {
+    paymentMethod: {
         type: String,
         required:true
     },
-    paymentResult: {
-        id: { type: String },
-        status: { type:String },
-        update_time: { type: String },
-        email_address:{type:String}
-    },
+    // paymentResult: {
+    //     id: { type: String },
+    //     status: { type:String },
+    //     update_time: { type: String },
+    //     email_address:{type:String}
+    // },
     taxPrice: {
         type: Number,
         required: true,
@@ -80,8 +80,13 @@ const orderSchema = mongoose.Schema({
         required: true,
         default:false
     },
+    orderedAt: {
+        type: Date,
+        default:Date.now()
+    },
     paidAt:{
-        type:Date
+        type: Date,
+        default:Date.now()
     },
     isDelivered: {
         type: Boolean,
@@ -89,8 +94,14 @@ const orderSchema = mongoose.Schema({
         default:false
     },
     deliveredAt: {
-        type:Date
+        type: Date,
+        default: Date.now()
+    },
+    eligibleForFreeShipping: {
+        type: Boolean,
+        default:false
     }
+
 }, { timeStamps: true })
 
 const order = mongoose.model('order', orderSchema);

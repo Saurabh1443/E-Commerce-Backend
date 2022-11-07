@@ -1,3 +1,4 @@
+const { expressjwt: JWT } = require("express-jwt");
 const userCtrl = require('../controllers/userControllers');
 
 const userRoutes = (app) => {
@@ -10,6 +11,11 @@ const userRoutes = (app) => {
         const { body } = req;
         let response = await userCtrl.add(body)
         return res.json(response)
+    })
+    app.get('/profile/:id', JWT({ secret: 'secret', algorithms: ["HS256"], }), async(req, res) => {
+        let { id } = req.params;
+        let response = await userCtrl.profileById(id);
+       return res.json(response)
     })
 }
 module.exports =userRoutes
