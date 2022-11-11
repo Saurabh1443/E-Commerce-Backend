@@ -52,14 +52,14 @@ const orderSchema = mongoose.Schema({
     },
     paymentMethod: {
         type: String,
-        required:true
+        default:"(COD) Cash On Delivery"
     },
-    // paymentResult: {
-    //     id: { type: String },
-    //     status: { type:String },
-    //     update_time: { type: String },
-    //     email_address:{type:String}
-    // },
+    paymentResult: {
+        razorpay_order_id: { type: String },
+        status: { type:String },
+        razorpay_payment_id: { type: String },
+        razorpay_signature:{ type: String },
+    },
     taxPrice: {
         type: Number,
         required: true,
@@ -100,7 +100,8 @@ const orderSchema = mongoose.Schema({
     eligibleForFreeShipping: {
         type: Boolean,
         default:false
-    }
+    },
+
 
 }, { timeStamps: true })
 

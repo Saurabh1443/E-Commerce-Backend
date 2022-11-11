@@ -25,10 +25,10 @@ const importData = async() => {
             return{...product,User:Admin}
         })
         await Product.insertMany(sampleData)
-        console.log('Data imported'.green.inverse)
+     
         process.exit();
     } catch (err) {
-        console.log(err);
+        throw err
     }
 }
 
@@ -39,7 +39,7 @@ const dataDestroy=async()=> {
         await User.deleteMany();
         process.exit()
     } catch (err) {
-        console.log(err)
+        throw err
     }
 }
 if (process.argv[2] == "-d") {

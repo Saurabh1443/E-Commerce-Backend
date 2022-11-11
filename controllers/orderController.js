@@ -10,7 +10,7 @@ const x = {
             const {
                orderItems,shippingAddress,paymentMethod,itemsPrice,taxPrice,shippingPrice,totalPrice,User,eligibleForFreeShipping
             } = data
-           console.log(shippingPrice,'ddddddddddd')
+          
             if (!orderItems || !orderItems.length) {
                 return resolve({
                     ...errorObj,
@@ -32,7 +32,7 @@ const x = {
             
             order.save((err, doc) => {
                 if (err || !doc) {
-                    
+                   
                     return resolve({
                         ...errorObj,
                         message: "order already exist.",
@@ -71,6 +71,29 @@ const x = {
             })
         })
     },
+    updateOrderStatus: (data) => {
+        return new Promise(async(resolve) => {
+            const { _id, paymentResult,isPaid,paymentMethod,paidAt } = data;
+            Order.findOne({ _id }).exec((err, result) => {
+                if (err || !result) return resolve({ ...errorObj, err })
+                
+                result.paymentResult = paymentResult
+                result.paidAt = paidAt
+                result.isPaid = isPaid
+                result.paymentMethod=paymentMethod
+                    
+                    
+                result.save((err, doc) => {
+                    if (err || !data) { 
+                        resolve({...errorObj, err, msg: 'Try again'}) 
+                    } 
+                    else {
+                      resolve({doc, successObj, msg: 'Order Updated'})
+                    }
+          })
+            })
+        })
+    }
     
 }
 module.exports= x

@@ -17,5 +17,9 @@ const userRoutes = (app) => {
         let response = await userCtrl.profileById(id);
        return res.json(response)
     })
+    app.put('/profile/update', async (req, res) => {
+        let response = await userCtrl.updateProfile(req.body);
+        return res.json({...response})
+    })
 }
 module.exports =userRoutes

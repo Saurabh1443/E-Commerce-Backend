@@ -44,7 +44,7 @@ const x = {
             });
           });
         } catch (err) {
-            console.log(err,'uuuuuuuuuuuuu')
+           throw err
         }
         
     }),
@@ -90,7 +90,7 @@ const x = {
                     message: "Email already exist.",
                   });
                 }
-               console.log(doc,'ffffffffffffffffffffffff')
+            
                 resolve({
                   ...successObj,
                   message:  `user added successfully`,
@@ -105,7 +105,7 @@ const x = {
           });
         
   },
-  profileById: (_id) => new Promise((resolve) => {
+  profileById: (_id) => new Promise(async(resolve) => {
     User.findOne({ _id }).lean().exec((err, doc) => {
       if (err || !doc) {
         resolve({
@@ -120,6 +120,30 @@ const x = {
         })
       }
       })
+  }),
+  updateProfile: (data) => new Promise(async (resolve) => {
+    let {_id,name} = data
+    User.findOne({_id}).exec((err, result) => {
+      
+      if (err || !result) {
+        resolve({
+          ...errorObj,
+          message:'User not found'
+          })
+      }
+      console.log(result,'before setting')
+      result.name = name
+      console.log(result,'after setting')
+      result.save((err, doc) => {
+        if (err || !data) { 
+            resolve({...errorObj, err, msg: 'Try again'}) 
+        } 
+        else {
+          resolve({doc, successObj, msg: 'User Updated'})
+        }
+})
+
     })
+  })
 }
 module.exports=x

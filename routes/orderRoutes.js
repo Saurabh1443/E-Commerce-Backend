@@ -3,10 +3,10 @@ const { expressjwt: JWT } = require("express-jwt");
 
 const orderRoutes= (app) => {
   app.post('/placeOrder', JWT({ secret: 'secret', algorithms: ["HS256"], }), async (req, res) => {
-       
+    console.log(req,'uuuuuuuuu')
     req.body.User = req.auth._id;
     let response = await OrderCtrl.addOrderItems(req.body)
-      
+
     return res.json({ ...response })
   });
   app.get('/orders', JWT({ secret: 'secret', algorithms: ["HS256"], }), async (req, res) => {
@@ -20,6 +20,7 @@ const orderRoutes= (app) => {
     return res.json({ ...response })
   })
 
+  
  
      
 };
