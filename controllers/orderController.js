@@ -32,7 +32,7 @@ const x = {
             
             order.save((err, doc) => {
                 if (err || !doc) {
-                   
+                   console.log(err,'gggggggggggggggggggggggggggg')
                     return resolve({
                         ...errorObj,
                         message: "order already exist.",
@@ -61,8 +61,8 @@ const x = {
     },
     getSpecificOrders: (query) => {
         return new Promise(async (resolve) => {
-            let {id1:_id,id2:product} = query
-            Order.find({_id,orderItems: {$elemMatch:{product}}}).lean().exec((err, doc) => {
+            let {id1,id2} = query
+            Order.find({_id:id1,orderItems: {$elemMatch:{_id:id2}}}).lean().exec((err, doc) => {
                 if (err || !doc) {
                     return resolve({ ...errorObj, err })
                 } else {

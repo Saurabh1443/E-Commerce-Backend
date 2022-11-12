@@ -3,7 +3,8 @@ const checkObj = require('../config/setting')
 const jwt=require('jsonwebtoken')
 const { errorObj, successObj } = checkObj
 const secret = process.env.SECRET_KEY;
-const validator = require('email-validator')
+const validator = require('email-validator');
+const Cart = require('../models/cartModel');
 const x = {
     login: (data) => new Promise((resolve) => {
         try {
@@ -82,7 +83,7 @@ const x = {
           
           
 
-              user.save((err, doc) => {
+              user.save(async(err, doc) => {
                   if (err) {
                    
                   return resolve({
@@ -90,7 +91,12 @@ const x = {
                     message: "Email already exist.",
                   });
                 }
-            
+              
+                const cart = new Cart();
+                cart.User = doc._id;
+                cart.savedItems = [];
+                
+               const data=await cart.save()
                 resolve({
                   ...successObj,
                   message:  `user added successfully`,

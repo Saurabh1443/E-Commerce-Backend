@@ -13,7 +13,7 @@ const orderSchema = mongoose.Schema({
                 type: String,
                 required:true
             },
-            qty: {
+            Qty: {
                 type: Number,
                 required:true
             },
@@ -25,7 +25,7 @@ const orderSchema = mongoose.Schema({
                 type: Number,
                 required:true
             },
-            product: {
+            _id: {
                 type: String,
                 required: true,  
             },

@@ -7,7 +7,7 @@ const Order = require('./models/orderModel')
 const products = require('./data/product');
 const connectDb = require('./config/config')
 
-dotenv.config();
+dotenv.config({ path: "./config/config.env" });
 connectDb();
 
 
@@ -25,7 +25,7 @@ const importData = async() => {
             return{...product,User:Admin}
         })
         await Product.insertMany(sampleData)
-     
+     console.log('ffffffffffffff')
         process.exit();
     } catch (err) {
         throw err
@@ -42,8 +42,4 @@ const dataDestroy=async()=> {
         throw err
     }
 }
-if (process.argv[2] == "-d") {
-    dataDestroy();
-} else {
-    importData()
-}
+module.exports=importData
